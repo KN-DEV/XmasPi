@@ -2,6 +2,7 @@ import wiringpi2 as w
 import time as t
 import urllib.request as u
 import json
+import dev_animation as dev
 
 # Setting up wiring pi
 w.wiringPiSetup()
@@ -44,9 +45,26 @@ def clear(amount):
 def download_contents(url):
      return u.urlopen(url).read()
 
+def play_dev_animation:
+    while True:
+        t.sleep(0.25)
+        for f in dev.FRAMES:
+            # Load registers with diod states
+            for diod_state in reversed(f):
+                send_one_bit( diod_state )
+            # Discharge regsisters to light LEDs
+            display()
+            # Sleep to make current frame visable for a while
+            t.sleep(0.1)
+            #t.sleep(frame_duration * f['repetition_count'])
+        t.sleep(0.25)
+
+##################################
 
 clear(40)
 display()
+
+play_dev_animation()
 
 # Download JSON file with an animation
 #contents = download_contents( "http://192.168.1.102/~plysiu/XmasPi-REST/index.php/animation/get.json" )
@@ -58,43 +76,16 @@ display()
 # Get frames
 #frames = animation['frames']
 
-# Frames of ">DEV" animation
-frames = [
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,0,0,1,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,1,1,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1,0,1,1,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,0,0,1,0,1,1,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,0,0,1,0,1,1,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-]
-
-# Play ">DEV" animation
-while True:
-    t.sleep(0.25)
-    for f in frames:
-        # Load registers with diod states
-        for diod_state in reversed(f):
-            send_one_bit( diod_state )
-        # Discharge regsisters to light LEDs
-        display()
-        # Sleep to make current frame visable for a while
-        t.sleep(0.1)
-        #t.sleep(frame_duration * f['repetition_count'])
-    t.sleep(0.25)
+# # Play ">DEV" animation
+# while True:
+#     t.sleep(0.25)
+#     for f in frames:
+#         # Load registers with diod states
+#         for diod_state in reversed(f):
+#             send_one_bit( diod_state )
+#         # Discharge regsisters to light LEDs
+#         display()
+#         # Sleep to make current frame visable for a while
+#         t.sleep(0.1)
+#         #t.sleep(frame_duration * f['repetition_count'])
+#     t.sleep(0.25)
