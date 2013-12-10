@@ -52,6 +52,10 @@ def clear(amount):
 def download_contents(url):
      return u.urlopen(url).read()
 
+def parse_json(content):
+    animation = json.loads(contents.decode('utf8'))
+    return animation
+
 def play_animation(frames, fps=4):
     frame_duration = 1/fps
     for frame in frames:
@@ -60,30 +64,28 @@ def play_animation(frames, fps=4):
         display()
         t.sleep(frame_duration)
 
-def play_dev_animation():
-    t.sleep(0.25)
-    for f in dev.DEV_FRAMES:
-        # Load registers with diod states
-        for diod_state in reversed(f):
-            send_one_bit( diod_state )
-        # Discharge regsisters to light LEDs
-        display()
-        # Sleep to make current frame visable for a while
-        t.sleep(0.1)
-    #t.sleep(frame_duration * f['repetition_count'])
-    t.sleep(0.25)
+# def play_dev_animation():
+#     t.sleep(0.25)
+#     for f in dev.DEV_FRAMES:
+#         # Load registers with diod states
+#         for diod_state in reversed(f):
+#             send_one_bit( diod_state )
+#         # Discharge regsisters to light LEDs
+#         display()
+#         # Sleep to make current frame visable for a while
+#         t.sleep(0.1)
+#     #t.sleep(frame_duration * f['repetition_count'])
+#     t.sleep(0.25)
 
 def play_christmas():
     for state in range(0, 39):
         send_one_bit(random.choice([0, 1]))
         t.sleep(0.25)
         display()
-
-def parse_json(content):
-    animation = json.loads(contents.decode('utf8'))
-    return animation
     
 ##################################
 
 while True:
-    play_animation(dev.TEST_FRAMES)
+	# play_animation(dev.DEV_FRAMES)
+    # play_animation(dev.TEST_FRAMES)
+	# play_christmas()
