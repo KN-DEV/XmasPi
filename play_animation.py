@@ -77,10 +77,12 @@ def play_animation(frames, fps=4):
 #     #t.sleep(frame_duration * f['repetition_count'])
 #     t.sleep(0.25)
 
+# This method is lighting random amount of LEDs 
+# in random amount of time. Feel free to change the time values
 def play_christmas():
     for state in range(0, 39):
         send_one_bit(random.choice([0, 1]))
-        t.sleep(0.25)
+        t.sleep(random.uniform(0.1, 0.5))
         display()
     
 ##################################
