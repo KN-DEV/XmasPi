@@ -103,7 +103,7 @@ while True:
     #play_animation(dev.HIGH_LOW_FRAMES)
     #play_christmas()
 
-    if random.choice( [0, 1, 2] ):
+    if random.choice( [0, 1, 2, 3, 4] ):
         play_animation( parse_json( download_contents( URL ) ) )
     else:
         play_animation( dev.DEV_FRAMES )
